@@ -1,8 +1,7 @@
-import React, { Suspense } from "react";
+import React from "react";
 import { ScrollView } from "react-native";
-import Card from "./Card";
 import useSWR from "swr";
-import { Text, SafeAreaView } from "react-native";
+import { SafeAreaView } from "react-native";
 import { ImagenBienvenida } from "./ImagenBienvenida";
 import ItemCard from "./ItemCard";
 
@@ -19,7 +18,6 @@ export default function ListProductos() {
         <ImagenBienvenida />
         {data.products.map((product, index) => (
           <ItemCard key={index} {...product} />
-          // <Card key={index} name={user.title} picture={user.thumbnail} />
         ))}
       </ScrollView>
     </SafeAreaView>

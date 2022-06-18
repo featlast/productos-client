@@ -1,5 +1,4 @@
-import React, { useContext } from "react";
-//import { CounterContext } from "../../App";
+import React, { useContext, useEffect, useState } from "react";
 import {
   VStack,
   HStack,
@@ -13,12 +12,31 @@ import {
   StatusBar,
   Hidden,
 } from "native-base";
-import { MaterialIcons } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
 import { View } from "react-native";
 import { CounterContext } from "../helpers/AppContext";
+import * as Font from "expo-font";
 
 function AppBar() {
   const { itemsCounter } = useContext(CounterContext);
+  const [fontsLoaded, setFontsLoaded] = useState(false);
+
+  useEffect(() => {
+    if (!fontsLoaded) {
+      loadFonts();
+    }
+  }, []);
+
+  const loadFonts = async () => {
+    await Font.loadAsync({
+      "opensans-bold": require("../fonts/OpenSans-Bold.ttf"),
+      "opensans-semibold": require("../fonts/OpenSans-SemiBold.ttf"),
+    });
+    setFontsLoaded(true);
+  };
+  if (!fontsLoaded) {
+    return <View />;
+  }
 
   return (
     <>
@@ -49,29 +67,32 @@ function AppBar() {
         top=".3"
       >
         <IconButton
-          icon={<Icon size="lg" as={MaterialIcons} name="menu" color="white" />}
+          icon={<Icon size="lg" as={FontAwesome5} name="bars" color="white" />}
         />
-        <Text color="white" fontSize="20" fontWeight="bold">
+        <Text color="white" fontSize="20" fontFamily="opensans-bold">
           Territorium
         </Text>
+
         <IconButton
           style={{ position: "relative" }}
           icon={
             <Icon
-              as={MaterialIcons}
+              as={FontAwesome5}
               name="shopping-cart"
               size="lg"
               color="white"
             />
           }
         />
+
         <View
           style={{
             width: 15,
             height: 15,
-            borderRadius: 15 / 2,
+            borderRadius: 100,
             position: "absolute",
-            right: 50,
+            right: 53,
+            bottom: 35,
             justifyContent: "center",
             alignItems: "center",
             backgroundColor: "#E8C724",

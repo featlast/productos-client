@@ -1,17 +1,7 @@
-import React, { useContext } from "react";
-//import { CounterContext } from "../../App";
-import {
-  Pressable,
-  Text,
-  Box,
-  HStack,
-  Spacer,
-  Flex,
-  Center,
-  NativeBaseProvider,
-  Badge,
-} from "native-base";
-import { StyleSheet, TouchableOpacity, Image } from "react-native";
+import React, { useContext, useEffect, useState } from "react";
+import { Pressable, Text, Box, HStack, Spacer } from "native-base";
+import { View, TouchableOpacity, Image } from "react-native";
+import * as Font from "expo-font";
 import { CounterContext } from "../helpers/AppContext";
 
 export default function ItemCard({
@@ -22,10 +12,29 @@ export default function ItemCard({
   thumbnail,
 }) {
   const { itemsCounter, setItemsCounter } = useContext(CounterContext);
+  const [fontsLoaded, setFontsLoaded] = useState(false);
+
+  useEffect(() => {
+    if (!fontsLoaded) {
+      loadFonts();
+    }
+  }, []);
+
+  const loadFonts = async () => {
+    await Font.loadAsync({
+      "opensans-regular": require("../fonts/OpenSans-Regular.ttf"),
+      "opensans-bold": require("../fonts/OpenSans-Bold.ttf"),
+      "opensans-semibold": require("../fonts/OpenSans-SemiBold.ttf"),
+    });
+    setFontsLoaded(true);
+  };
+  if (!fontsLoaded) {
+    return <View />;
+  }
 
   return (
     <Pressable>
-      {({ isHovered, isFocused, isPressed }) => {
+      {({ isHovered, isPressed }) => {
         return (
           <Box
             borderWidth="1"
@@ -34,11 +43,7 @@ export default function ItemCard({
             borderColor="coolGray.300"
             shadow="3"
             bg={
-              isPressed
-                ? "coolGray.200"
-                : isHovered
-                ? "coolGray.200"
-                : "coolGray.100"
+              isPressed ? "coolGray.200" : isHovered ? "#00000029" : "#FFFFFF"
             }
             rounded="10"
             style={{
@@ -63,13 +68,24 @@ export default function ItemCard({
             />
             <Box paddingX={"5"} paddingY={"2"}>
               <HStack alignItems="center">
-                <Text color="darkBlue.400">{category}</Text>
+                <Text
+                  style={{ textTransform: "uppercase" }}
+                  fontSize={10}
+                  fontFamily="opensans-regular"
+                  color="#507ED8"
+                >
+                  {category}
+                </Text>
                 <Spacer />
               </HStack>
-              <Text color="coolGray.800" fontWeight="medium" fontSize="xl">
+              <Text
+                color="#373E4A"
+                fontSize="16"
+                fontFamily="opensans-semibold"
+              >
                 {title}
               </Text>
-              <Text fontSize="sm" color="coolGray.700">
+              <Text fontSize="12" color="#737C8B" fontFamily="opensans-regular">
                 {description}
               </Text>
               <HStack justifyContent="space-between" alignItems="baseline">
@@ -78,14 +94,18 @@ export default function ItemCard({
                 >
                   <Text
                     fontSize={14}
-                    fontWeight="medium"
-                    color="darkBlue.600"
+                    color="#507ED8"
+                    fontFamily="opensans-regular"
                     alignSelf="flex-start"
                   >
                     + Add to Cart
                   </Text>
                 </TouchableOpacity>
-                <Text fontSize={18} fontWeight="semibold" color="coolGray.800">
+                <Text
+                  fontSize={18}
+                  fontFamily="opensans-semibold"
+                  color="#373E4A"
+                >
                   $ {price}
                 </Text>
               </HStack>

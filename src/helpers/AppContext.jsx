@@ -1,6 +1,4 @@
-import { createContext, useState } from "react";
-
-//const [itemsCounter, setItemsCounter] = useState("");
+import { createContext } from "react";
 
 export const CounterContext = createContext({
   itemsCounter: 0,
@@ -8,5 +6,3 @@ export const CounterContext = createContext({
     this.itemsCounter = counter;
   },
 });
-
-//itemsCounter, setItemsCounter

@@ -1,7 +1,12 @@
 //Imports de componentes del sistema
 import { Suspense, useState } from "react";
 import { SWRConfig } from "swr";
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  ActivityIndicator,
+} from "react-native";
 
 //Importacion de Componentes Propios
 import ListProductos from "./src/components/ListProductos";
@@ -25,7 +30,13 @@ export default function App() {
             }}
           >
             <Header />
-            <Suspense fallback={<Text style={styles.title}>Loading...</Text>}>
+            <Suspense
+              fallback={
+                <Text style={styles.title}>
+                  <ActivityIndicator size="large" color="#833197" />
+                </Text>
+              }
+            >
               <ListProductos />
             </Suspense>
           </SWRConfig>
