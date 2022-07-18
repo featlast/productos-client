@@ -1,4 +1,4 @@
-# productos-client
+# productos-client React Native Expo
 # Link APP:
 ### https://expo.dev/@featlast/productos-client 
 ### APP Construida con React Native Expo y Maquetado con NativeBase
